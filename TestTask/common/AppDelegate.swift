@@ -16,6 +16,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        if let login = UserDefaults.standard.string(forKey: Registration.mail.rawValue),
+            let token = UserDefaults.standard.string(forKey: login) {
+            Globals.API.AUTH.access_token = token
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let nextVC = storyboard.instantiateInitialViewController() as? ViewController
+            self.window?.rootViewController = nextVC
+        } else {
+            let storyboard = UIStoryboard(name: "Login", bundle: nil)
+            let nextVC = storyboard.instantiateInitialViewController() as? LoginViewController
+            self.window?.rootViewController = nextVC        }
+        
+        
+        
         return true
     }
 
